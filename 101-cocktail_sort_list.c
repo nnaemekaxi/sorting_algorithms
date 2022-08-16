@@ -1,7 +1,7 @@
 #include "sort.h"
 
 /**
- * swapper - a function to help swap 2 nodes in a dlist
+ * swap_node - a function to help swap 2 nodes in a dlist
  * @a: one node
  * @b: the other node
  */
