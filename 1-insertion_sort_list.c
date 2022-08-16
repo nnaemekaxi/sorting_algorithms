@@ -1,4 +1,5 @@
 #include "sort.h"
+
 /**
  * insertion_sort_list - sort a dlist via insertion sort
  * @list: the list to sort
@@ -40,7 +41,7 @@ void insertion_sort_list(listint_t **list)
 
 
 /**
- * swapper - a function to help swap 2 nodes in a dlist
+ * swap_node - a function to help swap 2 nodes in a dlist
  * @a: one node
  * @b: the other node
  *
