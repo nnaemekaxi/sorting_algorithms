@@ -37,7 +37,7 @@ void bitonic_sort(int *array, size_t size);
 void quick_sort_hoare(int *array, size_t size);
 void swap(int *array, int a, int b);
 void swap_node(listint_t *a, listint_t *b);
-size_t knuth_gap(size_t size);
+size_t get_gap(size_t size);
 void quicksort(int *array, size_t size, ssize_t low, ssize_t high);
 size_t partition_array(int *array, size_t size, ssize_t low, ssize_t high);
 void swap_integers(int *a, int *b);

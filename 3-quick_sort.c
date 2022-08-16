@@ -64,7 +64,7 @@ size_t partition_array(int *array, size_t size, ssize_t low, ssize_t high)
 {
 	/*declarations */
 	int x;
-	int y; 
+	int y;
 	int z;
 
 	/* set the pivot */
