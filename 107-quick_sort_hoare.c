@@ -39,7 +39,7 @@ size_t partition(int *array, ssize_t lo, ssize_t hi, size_t size)
 }
 
 /**
- * quicksort - sorts a partition of an array of integers
+ * quicksort_int - sorts a partition of an array of integers
  * @array: array to sort
  * @lo: lowest index of the partition to sort
  * @hi: highest index of the partition to sort
@@ -47,15 +47,15 @@ size_t partition(int *array, ssize_t lo, ssize_t hi, size_t size)
  *
  * Return: void
  */
-void quicksort(int *array, ssize_t lo, ssize_t hi, size_t size)
+void quicksort_int(int *array, ssize_t lo, ssize_t hi, size_t size)
 {
 	ssize_t pivot;
 
 	if (lo < hi)
 	{
 		pivot = partition(array, lo, hi, size);
-		quicksort(array, lo, pivot, size);
-		quicksort(array, pivot + 1, hi, size);
+		quicksort_int(array, lo, pivot, size);
+		quicksort_int(array, pivot + 1, hi, size);
 
 	}
 }
@@ -72,5 +72,5 @@ void quick_sort_hoare(int *array, size_t size)
 {
 	if (array == NULL || size < 2)
 		return;
-	quicksort(array, 0, size - 1, size);
+	quicksort_int(array, 0, size - 1, size);
 }
