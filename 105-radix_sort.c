@@ -1,73 +1,85 @@
 #include "sort.h"
+#include <stdlib.h>
 
 /**
-* findmax - Finds the maximum value in an array
-* @array: array to find max value of
-* @size: Size of array
-* Return: Largest value
-*/
-
-int findmax(int *array, size_t size)
+ * pow_10 - calculates a positive power of 10
+ * @power: power of 10 to calculate
+ *
+ * Return: the corresponding power of 10
+ */
+unsigned int pow_10(unsigned int power)
 {
-	int i, max = 0;
+	unsigned int i, result;
 
-	for (i = 0; i < (int)size; i++)
-	{
-		if (max < array[i])
-			max = array[i];
-	}
-	return (max);
+	result = 1;
+	for (i = 0; i < power; i++)
+		result *= 10;
+	return (result);
 }
 
 /**
-* radix_sort - Sorts an array using radix sort algo
-* @array: Array to sort
-* @size: size of array
-*/
+ * count_sort - sorts an array of integers in ascending order at a specific
+ * digit location using the Counting sort algorithm
+ * @array: array to sort
+ * @size: size of the array to sort
+ * @digit: digit to sort by
+ *
+ * Return: 1 if there is a need to keep sorting, 0 if not
+ */
+unsigned int count_sort(int *array, size_t size, unsigned int digit)
+{
+	int i, count[10] = {0};
+	int *copy = NULL;
+	size_t j, temp, total = 0;
+	unsigned int dp1, dp2, sort = 0;
 
+	dp2 = pow_10(digit - 1);
+	dp1 = dp2 * 10;
+	copy = malloc(sizeof(int) * size);
+	if (copy == NULL)
+		exit(1);
+	for (j = 0; j < size; j++)
+	{
+		copy[j] = array[j];
+		if (array[j] / dp1 != 0)
+			sort = 1;
+	}
+	for (i = 0; i < 10 ; i++)
+		count[i] = 0;
+	for (j = 0; j < size; j++)
+		count[(array[j] % dp1) / dp2] += 1;
+	for (i = 0; i < 10; i++)
+	{
+		temp = count[i];
+		count[i] = total;
+		total += temp;
+	}
+	for (j = 0; j < size; j++)
+	{
+		array[count[(copy[j] % dp1) / dp2]] = copy[j];
+		count[(copy[j] % dp1) / dp2] += 1;
+	}
+	free(copy);
+	return (sort);
+}
+
+/**
+ * radix_sort - sorts an array of integers in ascending order using
+ * the Radix sort algorithm
+ * @array: array to sort
+ * @size: size of the array
+ *
+ * Return: void
+ */
 void radix_sort(int *array, size_t size)
 {
-	int m, pos, *out, *ca;
+	unsigned int i, sort = 1;
 
 	if (array == NULL || size < 2)
 		return;
-	m = findmax(array, size);
-	out = malloc(sizeof(int) * (int)size);
-	ca = malloc(sizeof(int) * (10));
-	if (ca == NULL || out == NULL)
-		return;
-	for (pos = 1; m / pos > 0; pos *= 10)
-		counting_sort_r(array, size, pos, out, ca), print_array(array, size);
-	free(out);
-	free(ca);
-}
-
-/**
-* counting_sort_r - sorts array using counting algorithm
-* @array: Array to sort
-* @size: Size of array
-* @pos: Digit position value
-* @out: Temp output array
-* @ca: Count array
-*/
-
-void counting_sort_r(int *array, size_t size, int pos, int *out, int *ca)
-{
-	int i;
-
-	if (array == NULL || size < 2)
-		return;
-	for (i = 0; i < 10; i++)
-		ca[i] = 0;
-	for (i = 0; i < (int)size; i++)
-		ca[((array[i] / pos) % 10)] += 1;
-	for (i = 0; i < 10; i++)
-		ca[i] += ca[i - 1];
-	for (i = size - 1; i >= 0; i--)
+	for (i = 1; sort == 1; i++)
 	{
-		out[ca[((array[i] / pos) % 10)] - 1] = array[i];
-		ca[((array[i] / pos) % 10)] -= 1;
+		sort = count_sort(array, size, i);
+		print_array(array, size);
 	}
-	for (i = 0; i < (int)size; i++)
-		array[i] = out[i];
 }
