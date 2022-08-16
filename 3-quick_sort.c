@@ -29,7 +29,7 @@ void quicksort(int *array, size_t size, ssize_t low, ssize_t high)
 {
 	if (low < high)
 	{
-		size_t part = partition(array, size, low, high);
+		size_t part = partition_array(array, size, low, high);
 
 		quicksort(array, size, low, part - 1);
 		quicksort(array, size, part + 1, high);
