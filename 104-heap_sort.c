@@ -37,7 +37,7 @@ void heap_sort(int *array, size_t size)
 	if (array == NULL || size < 2)
 		return;
 	for (; i >= 0; i--)
-		stupify(array, size, i, size);
+		heapify(array, size, i, size);
 	for (i = size - 1; i >= 0; i--)
 	{
 		temp = array[0];
