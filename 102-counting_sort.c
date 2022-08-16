@@ -52,7 +52,7 @@ void counting_sort(int *array, size_t size)
 {
 	int max, *ca, *out;
 	int x;
-	int j;
+	int y;
 
 	if (array == NULL || size < 2)
 		return;
